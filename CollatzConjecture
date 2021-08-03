@@ -1,0 +1,41 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Jul  4 19:27:16 2021
+@author: jayaditya.sirasani
+"""
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+def Collatz_Calculator(seed):    
+    Number=seed
+    Count=1
+    OutputArray=[]    
+    while Number!=1:
+        OutputArray.append([Count,Number])
+        if Number%2==0:
+            Number=Number/2
+        else:
+            Number=(3*Number)+1
+        Count=Count+1
+    OutputFrame=pd.DataFrame(OutputArray)
+    sns.lineplot(data=OutputFrame, x=0, y=1)
+    return Count 
+
+while True:
+    UserInput=int(input("Enter Max Number:"))
+    SummaryArray=[]
+    for i in range(2,UserInput):
+        Count=Collatz_Calculator(i)
+        SummaryArray.append([i,Count])
+    SummaryFrame=pd.DataFrame(SummaryArray)
+    
+    plt.figure()
+    sns.scatterplot(data=SummaryFrame, x=0, y=1)
+    plt.title('Number vs Length')
+    # Set x-axis label
+    plt.xlabel('Seed Number')
+    # Set y-axis label
+    plt.ylabel('Collatz Count')
+    plt.show()
+
